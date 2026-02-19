@@ -1,70 +1,105 @@
-/**
- * OOPSBannerApp UC6 – OOPS Banner Application (Use Case 6)
- *
- * This use case extends UC5 by implementing a modular approach to generate each
- * letter's pattern through dedicated methods. This enhances code reusability and
- * maintainability by separating pattern generation logic from the main display logic.
- *
- * @author Developer
- * @version 6.0
- */
 public class OOPSBannerApp {
-    public static String[] getOPattern() {
-        return new String[] {
-            " *** ",
-            "*   *",
-            "*   *",
-            "*   *",
-            "*   *",
-            "*   *",
-            " *** "
-        };
-    }
-    public static String[] getPPattern() {
-        return new String[] {
-            "**** ",
-            "*   *",
-            "*   *",
-            "**** ",
-            "*    ",
-            "*    ",
-            "*    "
-        };
-    }
-    public static String[] getSPattern() {
-        return new String[] {
-            " *** ",
-            "*   *",
-            "*    ",
-            " *** ",
-            "    *",
-            "*   *",
-            " *** "
-        };
-    }
+    static class CharacterPatternMap {
+        private final Character character;
+        private final String[] pattern;
 
-    public static void main(String[] args) {
-
-        // Get patterns for O, O, P, S
-        String[] o1 = getOPattern();
-        String[] o2 = getOPattern();
-        String[] p  = getPPattern();
-        String[] s  = getSPattern();
-
-        // Gap between letters
-        String gap = "  ";
-
-        // Assume all patterns share the same height
-        int rows = o1.length;
-
-        // Print assembled banner line-by-line
-        for (int i = 0; i < rows; i++) {
-            System.out.println(
-                o1[i] + gap +
-                o2[i] + gap +
-                p[i]  + gap +
-                s[i]
-            );
+        public CharacterPatternMap(Character character, String[] pattern) {
+            this.character = character;
+            this.pattern = pattern;
         }
+
+        public Character getCharacter() {
+            return character;
+        }
+
+        public String[] getPattern() {
+            return pattern;
+        }
+    }
+
+        public static CharacterPatternMap[] createCharacterPatternMaps() {
+
+        String[] O = {
+            "  *****  ",
+            " *     * ",
+            "*       *",
+            "*       *",
+            "*       *",
+            " *     * ",
+            "  *****  "
+        };
+
+        String[] P = {
+            "*******  ",
+            "*      * ",
+            "*      * ",
+            "*******  ",
+            "*        ",
+            "*        ",
+            "*        "
+        };
+
+        String[] S = {
+            "  ****** ",
+            " *       ",
+            "*        ",
+            " ******  ",
+            "       * ",
+            "       * ",
+            " ******  "
+        };
+
+        String[] SPACE = {
+            "   ",
+            "   ",
+            "   ",
+            "   ",
+            "   ",
+            "   ",
+            "   "
+        };
+
+        return new CharacterPatternMap[] {
+            new CharacterPatternMap('O', O),
+            new CharacterPatternMap('P', P),
+            new CharacterPatternMap('S', S),
+            new CharacterPatternMap(' ', SPACE)
+        };
+    }
+
+        public static String[] getCharacterPattern(char ch, CharacterPatternMap[] charMaps) {
+        char upper = Character.toUpperCase(ch);
+        String[] space = null;
+
+        for (CharacterPatternMap map : charMaps) {
+            if (map.getCharacter() == ' ') {
+                space = map.getPattern();
+            }
+            if (map.getCharacter() == upper) {
+                return map.getPattern();
+            }
+        }
+        return (space != null) ? space : new String[] {"", "", "", "", "", "", ""};
+    }
+
+        public static void printMessage(String message, CharacterPatternMap[] charMaps) {
+        if (message == null || message.isEmpty()) return;
+
+        final int HEIGHT = 7;
+        for (int row = 0; row < HEIGHT; row++) {
+            StringBuilder line = new StringBuilder();
+            for (int i = 0; i < message.length(); i++) {
+                String[] pat = getCharacterPattern(message.charAt(i), charMaps);
+                line.append(pat[row]);
+                if (i < message.length() - 1) line.append(" ");
+            }
+            System.out.println(line.toString());
+        }
+    }
+
+        public static void main(String[] args) {
+        CharacterPatternMap[] charMaps = createCharacterPatternMaps();
+        String message = "OOPS";
+        printMessage(message, charMaps);
     }
 }
