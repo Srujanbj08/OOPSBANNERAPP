@@ -1,77 +1,45 @@
-/*
-	* OOPSBannerApp UC7 - Store chareceter pattern in a class
-	* 
-	* This class extends UC6 by implementing a CharecterPatternMap class to encapsulate charecter-to-pattern mappings. 
-	* The application retrieves and displays "OOPS" banner using these mappings. 
-	* This approach enhances code reusability and maintainablilty by separating pattern generation logic from main display logic.
-	*
-	* @author Developer
-	* @version 7.0
-*/
-
-class OOPSBannerApp
-{
-	static class CharecterPatternMap
-	{
-		public static String[] getOPattern()
-		{
-			return new String[]{
-				"   ***   " ,
-				" **   ** " ,
-				"**     **" ,
-				"**     **" ,
-				"**     **" ,
-				"**     **" ,
-				"**     **" ,
-				" **   ** " ,
-				"   ***   "
-			};
-		}
-		public static String[] getPPattern()
-		{
-			return new String[] {
-				"******   ",
-				"**    ** ",
-				"**     **",
-				"**    ** ",
-				"******   ",
-				"**       ",
-				"**       ",
-				"**       ",
-				"**       "
-			};
-		}
-		public static String[] getSPattern()
-		{
-			return new String[] {
-				"    *****",
-				" **      ",
-				"**       ",
-				" **      ",
-				"   ***   ",
-				"      ** ",
-				"       **",
-				"      ** ",
-				"*****    "
-			};
-		}
-		public void printMessage()
-		{
-			String[] oPattern = getOPattern();
-			String[] pPattern = getPPattern();
-			String[] sPattern = getSPattern();
-			
-			for(int i=0; i< oPattern.length; i++ )
-			{
-				System.out.println(oPattern[i] + " " + oPattern[i] + " " + pPattern[i] + " " + sPattern[i]);
-			}
-		}
-	}
-		
-	
-	public static void main(String[] args)
-	{
-		CharecterPatternMap charMap = new CharecterPatternMap();
-		charMap.printMessage();
-	}
+/**
+ * OOPSBannerApp – Use Map for Character Patterns and Render via Function
+ *
+ * This use case extends UC7 by utilizing advanced Object-Oriented Programming concepts
+ * such as the Collections Framework to manage character patterns in a more flexible
+ * and efficient manner. The application retrieves and displays the "OOPS" banner
+ * using a HashMap thereby enhancing code organization and modularity.
+ *
+ * @author Developer
+ * @version 8.0
+ */
+import java.util.*;
+public class OOPSBannerApp {
+    public static void main(String[] args) {
+        HashMap<Character, String[]> map = new HashMap<>();
+        map.put('O', new String[]{
+                " ***** ",
+                "*     *",
+                "*     *",
+                "*     *",
+                " ***** "
+        });
+        map.put('P', new String[]{
+                "****** ",
+                "*     *",
+                "****** ",
+                "*      ",
+                "*      "
+        });
+        map.put('S', new String[]{
+                " ***** ",
+                "*      ",
+                " ***** ",
+                "      *",
+                " ***** "
+        });
+        String word = "OOPS";
+        for (int i = 0; i < 5; i++) {  // 5 rows
+            for (char ch : word.toCharArray()) {
+                System.out.print(map.get(ch)[i] + "  ");
+            }
+            System.out.println();
+        }
+    }
 }
